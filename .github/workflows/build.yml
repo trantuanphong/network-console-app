@@ -25,12 +25,14 @@ jobs:
           java-version: '17'
 
       - name: Compile Java
-        run: javac src/NetworkConsoleApp.java
+        run: |
+          mkdir -p build
+          javac -d build src/NetworkConsoleApp.java
 
       - name: Create jar
         run: |
           echo "Main-Class: NetworkConsoleApp" > manifest.txt
-          jar cfm NetworkConsoleApp.jar -C src/ NetworkConsoleApp.class
+          jar cfm NetworkConsoleApp.jar manifest.txt -C build .
 
       - name: Install jpackage if Linux
         if: runner.os == 'Linux'
