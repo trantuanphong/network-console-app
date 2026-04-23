@@ -17,9 +17,8 @@
 
 ## Cách tải
 
-1. Truy cập repository GitHub: [Link repo]  
-2. Chọn **Actions → build gần nhất → Artifacts**  
-3. Download folder tương ứng hệ điều hành:  
+1. Chọn **Actions → build gần nhất → Artifacts** (https://github.com/trantuanphong/network-console-app/actions)
+2. Download folder tương ứng hệ điều hành:  
    - **Windows:** `NetworkConsoleApp-windows-latest`  
    - **Linux:** `NetworkConsoleApp-ubuntu-latest`  
    - **Mac:** `NetworkConsoleApp-macos-latest`  
@@ -30,7 +29,7 @@
 
 ### Windows
 1. Mở folder artifact  
-2. Double-click **NetworkConsoleApp.exe**  
+2. Double-click **run.bat** → console app sẽ hiển thị menu 
 3. Menu console sẽ xuất hiện, chọn chức năng mong muốn  
 
 ### Linux
