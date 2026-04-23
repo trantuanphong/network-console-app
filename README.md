@@ -30,7 +30,7 @@
 
 ### Windows
 1. Mở folder artifact  
-2. Double-click **NetworkConsoleApp.exe**  
+2. Double-click **run.bat** → console app sẽ hiển thị menu 
 3. Menu console sẽ xuất hiện, chọn chức năng mong muốn  
 
 ### Linux
