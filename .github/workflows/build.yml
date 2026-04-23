@@ -15,33 +15,38 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-    - name: Compile Java
-      run: javac NetworkConsoleApp.java
+      - name: Compile Java
+        run: javac NetworkConsoleApp.java
 
-    - name: Create jar
-      run: |
-        echo "Main-Class: NetworkConsoleApp" > manifest.txt
-        jar cfm NetworkConsoleApp.jar manifest.txt NetworkConsoleApp.class
+      - name: Create jar
+        run: |
+          echo "Main-Class: NetworkConsoleApp" > manifest.txt
+          jar cfm NetworkConsoleApp.jar manifest.txt NetworkConsoleApp.class
 
-    - name: Create native executable
-      run: |
-        jpackage --name NetworkConsoleApp \
-                 --input . \
-                 --main-jar NetworkConsoleApp.jar \
-                 --main-class NetworkConsoleApp \
-                 --type app-image
-      shell: bash
+      - name: Install jpackage if Linux
+        if: runner.os == 'Linux'
+        run: sudo apt install -y openjdk-17-jdk
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: NetworkConsoleApp-${{ matrix.os }}
-        path: NetworkConsoleApp.app-image/
+      - name: Create native executable (app-image)
+        run: |
+          jpackage --name NetworkConsoleApp \
+                   --input . \
+                   --main-jar NetworkConsoleApp.jar \
+                   --main-class NetworkConsoleApp \
+                   --type app-image
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NetworkConsoleApp-${{ matrix.os }}
+          path: NetworkConsoleApp.app-image/
