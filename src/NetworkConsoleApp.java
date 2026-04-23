@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -10,6 +11,7 @@ import java.util.concurrent.*;
 public class NetworkConsoleApp {
     
     public static void main(String[] args) throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
