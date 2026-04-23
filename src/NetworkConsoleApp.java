@@ -11,16 +11,15 @@ import java.util.concurrent.*;
 public class NetworkConsoleApp {
     
     public static void main(String[] args) throws Exception {
-        System.setOut(new PrintStream(System.out, true, "UTF-8"));
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("\n=== NETWORK CONSOLE APP ===");
-            System.out.println("1. Hiển thị địa chỉ IP local");
-            System.out.println("2. Hiển thị danh sách IP trong network");
-            System.out.println("3. Tìm một IP trong network");
-            System.out.println("4. Thoát");
-            System.out.print("Chọn chức năng: ");
+            System.out.println("1. Show my local IP");
+            System.out.println("2. List IPs in the network");
+            System.out.println("3. Find an IP in the network");
+            System.out.println("4. Exit");
+            System.out.print("Select an option: ");
 
             String choice = scanner.nextLine();
 
@@ -28,15 +27,15 @@ public class NetworkConsoleApp {
                 case "1" -> showLocalIP();
                 case "2" -> scanNetwork();
                 case "3" -> {
-                    System.out.print("Nhập IP cần tìm: ");
+                    System.out.print("Enter IP to search: ");
                     String targetIP = scanner.nextLine();
                     searchIP(targetIP);
                 }
                 case "4" -> {
-                    System.out.println("Thoát chương trình.");
+                    System.out.println("Exiting program.");
                     return;
                 }
-                default -> System.out.println("Lựa chọn không hợp lệ!");
+                default -> System.out.println("Invalid choice!");
             }
         }
     }
@@ -78,7 +77,7 @@ public class NetworkConsoleApp {
         if (res != null) {
             System.out.println("Found: " + res);
         } else {
-            System.out.println("Không tìm thấy IP " + targetIP + " trong mạng.");
+            System.out.println("IP " + targetIP + " was not found in the network.");
         }
 
         executor.shutdown();
