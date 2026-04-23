@@ -1,4 +1,4 @@
-name: Matrix Build - Single Executable
+name: Build Java Jar with run.bat
 
 on:
   push:
@@ -7,12 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -34,21 +29,16 @@ jobs:
           echo "Main-Class: NetworkConsoleApp" > manifest.txt
           jar cfm NetworkConsoleApp.jar manifest.txt -C build .
 
-      - name: Install jpackage if Linux
-        if: runner.os == 'Linux'
-        run: sudo apt install -y openjdk-17-jdk
-
-      - name: Create native executable (app-image)
+      - name: Create run.bat for Windows
         run: |
-          jpackage --name NetworkConsoleApp \
-                   --input . \
-                   --main-jar NetworkConsoleApp.jar \
-                   --main-class NetworkConsoleApp \
-                   --type app-image
-        shell: bash
+          echo @echo off > run.bat
+          echo java -jar NetworkConsoleApp.jar >> run.bat
+          echo pause >> run.bat
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NetworkConsoleApp-${{ matrix.os }}
-          path: NetworkConsoleApp.app-image/
+          name: NetworkConsoleApp
+          path: |
+            NetworkConsoleApp.jar
+            run.bat
